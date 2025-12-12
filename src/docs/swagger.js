@@ -1,4 +1,3 @@
-// src/docs/swagger.js
 export const swaggerDocument = {
   openapi: "3.0.0",
   info: {
