@@ -1,0 +1,3 @@
+repository = https://github.com/EedSuaidi/bidhouse
+website = https://bidhouse-chi.vercel.app/
+dokumentasi API = https://bidhouse-chi.vercel.app/api-docs
