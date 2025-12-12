@@ -9,6 +9,7 @@ import { fileURLToPath } from "url";
 
 // Routes
 import authRoutes from "./routes/auth.route.js";
+import itemRoutes from "./routes/item.route.js";
 
 // Load env vars
 dotenv.config();
@@ -33,6 +34,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // API Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/items", itemRoutes);
 
 // Test Route
 app.get("/", (req, res) => {
