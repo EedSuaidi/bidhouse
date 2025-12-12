@@ -1,5 +1,4 @@
-// src/utils/db.js
-import "dotenv/config"; // <--- INI KUNCINYA! Wajib ada biar dia baca .env duluan
+import "dotenv/config";
 import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import pg from "pg";

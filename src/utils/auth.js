@@ -1,5 +1,4 @@
-// src/utils/auth.js
-import "dotenv/config"; // <--- WAJIB ADA BIAR BACA .ENV
+import "dotenv/config";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 

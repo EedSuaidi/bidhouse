@@ -1,4 +1,3 @@
-// src/middlewares/auth.middleware.js
 import "dotenv/config";
 import jwt from "jsonwebtoken";
 

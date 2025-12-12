@@ -7,7 +7,7 @@ export const swaggerDocument = {
   },
   servers: [
     {
-      url: "https://bidhouse-chi.vercel.app", // Ganti URL Vercel lo biar bisa 'Try it out' langsung
+      url: "https://bidhouse-chi.vercel.app",
       description: "Production Server",
     },
     {
@@ -43,8 +43,8 @@ export const swaggerDocument = {
                 type: "object",
                 required: ["name", "email", "password"],
                 properties: {
-                  name: { type: "string", example: "Eed Ganteng" },
-                  email: { type: "string", example: "eed@example.com" },
+                  name: { type: "string", example: "Test" },
+                  email: { type: "string", example: "test@example.com" },
                   password: { type: "string", example: "rahasia123" },
                 },
               },
@@ -69,7 +69,7 @@ export const swaggerDocument = {
                 type: "object",
                 required: ["email", "password"],
                 properties: {
-                  email: { type: "string", example: "eed@example.com" },
+                  email: { type: "string", example: "test@example.com" },
                   password: { type: "string", example: "rahasia123" },
                 },
               },

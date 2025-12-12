@@ -1,4 +1,3 @@
-// src/controllers/item.controller.js
 import prisma from "../utils/db.js";
 import { itemSchema } from "../utils/validators.js";
 

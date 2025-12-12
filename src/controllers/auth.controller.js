@@ -1,4 +1,3 @@
-// src/controllers/auth.controller.js
 import crypto from "crypto";
 import { registerSchema, loginSchema } from "../utils/validators.js";
 import { hashPassword, comparePassword, generateToken } from "../utils/auth.js";

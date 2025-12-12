@@ -1,4 +1,3 @@
-// src/utils/validators.js
 import { z } from "zod";
 
 export const registerSchema = z.object({

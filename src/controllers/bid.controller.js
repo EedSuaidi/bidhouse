@@ -1,12 +1,11 @@
-// src/controllers/bid.controller.js
 import prisma from "../utils/db.js";
 import { bidSchema } from "../utils/validators.js";
 
 // PLACE BID
 export const placeBid = async (req, res) => {
   try {
-    const { id } = req.params; // UUID String
-    const userId = req.user.id; // UUID String dari token
+    const { id } = req.params;
+    const userId = req.user.id;
 
     const result = bidSchema.safeParse(req.body);
     if (!result.success) {

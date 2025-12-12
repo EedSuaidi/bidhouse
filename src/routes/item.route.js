@@ -1,4 +1,3 @@
-// src/routes/item.route.js
 import express from "express";
 import {
   createItem,
@@ -7,7 +6,7 @@ import {
   deleteItem,
   closeAuction,
 } from "../controllers/item.controller.js";
-import { placeBid } from "../controllers/bid.controller.js"; // <--- Import controller bid
+import { placeBid } from "../controllers/bid.controller.js";
 import {
   authenticate,
   authorizeAdmin,

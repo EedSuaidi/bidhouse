@@ -1,5 +1,4 @@
-// src/utils/email.js
-import "dotenv/config"; // <--- INI OBATNYA! Wajib ada di baris pertama.
+import "dotenv/config";
 import nodemailer from "nodemailer";
 
 // Cek dulu biar gak error aneh kayak "Missing credentials"
@@ -12,7 +11,7 @@ if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
 // Setup Transporter (Si Tukang Pos)
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST || "smtp.gmail.com",
-  port: Number(process.env.SMTP_PORT) || 587, // Pastiin jadi number
+  port: Number(process.env.SMTP_PORT) || 587,
   secure: false,
   auth: {
     user: process.env.SMTP_USER,
