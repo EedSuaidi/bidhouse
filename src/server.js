@@ -55,10 +55,13 @@ app.use((err, req, res, next) => {
 });
 
 // Start Server
-app.listen(PORT, () => {
-  console.log(`
-  🚀 Server is running on port ${PORT}
-  🌐 URL: http://localhost:${PORT}
-  📑 Docs: http://localhost:${PORT}/api-docs
-  `);
-});
+if (process.env.NODE_ENV !== "production") {
+  app.listen(PORT, () => {
+    console.log(`
+      🚀 Server is running on port ${PORT}
+      🌐 URL: http://localhost:${PORT}
+      `);
+  });
+}
+
+export default app;
