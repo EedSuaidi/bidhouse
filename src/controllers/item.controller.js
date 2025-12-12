@@ -60,15 +60,15 @@ export const getAllItems = async (req, res) => {
 // 3. GET ITEM BY ID
 export const getItemById = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { id } = req.params; // UUID udah string, JANGAN diparseInt
     const item = await prisma.item.findUnique({
-      where: { id: parseInt(id) },
+      where: { id: id }, // <--- Langsung pake id string
       include: {
-        winner: { select: { name: true, email: true } }, // Kalo udah menang, liat siapa
+        winner: { select: { name: true, email: true } },
         bids: {
           orderBy: { amount: "desc" },
           take: 5,
-          include: { user: { select: { name: true } } }, // Liat nama yg nge-bid
+          include: { user: { select: { name: true } } },
         },
       },
     });
@@ -84,26 +84,22 @@ export const getItemById = async (req, res) => {
 export const deleteItem = async (req, res) => {
   try {
     const { id } = req.params;
-    await prisma.item.delete({ where: { id: parseInt(id) } });
+    await prisma.item.delete({ where: { id: id } }); // <--- Langsung pake id string
     res.status(200).json({ message: "Item deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
-// --- FITUR BARU: CLOSE AUCTION (Manual Trigger by Admin) ---
+// 5. CLOSE AUCTION
 export const closeAuction = async (req, res) => {
   try {
     const { id } = req.params;
 
-    // Cari Item + Bid Tertinggi
     const item = await prisma.item.findUnique({
-      where: { id: parseInt(id) },
+      where: { id: id }, // <--- Langsung pake id string
       include: {
-        bids: {
-          orderBy: { amount: "desc" },
-          take: 1, // Ambil 1 bid paling mahal
-        },
+        bids: { orderBy: { amount: "desc" }, take: 1 },
       },
     });
 
@@ -111,17 +107,12 @@ export const closeAuction = async (req, res) => {
     if (item.status === "CLOSED")
       return res.status(400).json({ message: "Auction is already closed" });
 
-    // Cek ada yang nge-bid gak?
     const highestBid = item.bids[0];
-    const winnerId = highestBid ? highestBid.userId : null; // Kalo gak ada bid, winner null
+    const winnerId = highestBid ? highestBid.userId : null;
 
-    // Update Status & Pemenang
     const updatedItem = await prisma.item.update({
-      where: { id: parseInt(id) },
-      data: {
-        status: "CLOSED",
-        winnerId: winnerId,
-      },
+      where: { id: id },
+      data: { status: "CLOSED", winnerId: winnerId },
     });
 
     res.status(200).json({
