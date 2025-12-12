@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import swaggerUi from "swagger-ui-express";
-
 import { swaggerDocument } from "./docs/swagger.js";
 
 import authRoutes from "./routes/auth.route.js";
@@ -18,22 +17,24 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const CSS_URL =
-  "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css";
+  "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.0.0/swagger-ui.min.css";
 
 app.use(
   "/api-docs",
   swaggerUi.serve,
-  swaggerUi.setup(swaggerDocument, { customCssUrl: CSS_URL })
+  swaggerUi.setup(swaggerDocument, {
+    customCssUrl: CSS_URL,
+  })
 );
-// -----------------------------
 
+// routes
 app.use("/api/auth", authRoutes);
 app.use("/api/items", itemRoutes);
 
 app.get("/", (req, res) => {
   res.send({
     message: "Welcome to BidHouse API 🚀",
-    docs: "Check documentation at /api-docs", // Ganti link biar user tau
+    docs: "Check documentation at /api-docs",
   });
 });
 
