@@ -18,12 +18,18 @@ app.use(express.urlencoded({ extended: true }));
 
 const CSS_URL =
   "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.0.0/swagger-ui.min.css";
+const JS_URL =
+  "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.0.0/swagger-ui-bundle.js";
+const PRESET_URL =
+  "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.0.0/swagger-ui-standalone-preset.js";
 
 app.use(
   "/api-docs",
   swaggerUi.serve,
   swaggerUi.setup(swaggerDocument, {
     customCssUrl: CSS_URL,
+    customJs: [JS_URL, PRESET_URL], // <--- INI PENTING! Kita load JS dari luar juga
+    customSiteTitle: "BidHouse API Docs", // Biar tab browser namanya keren
   })
 );
 
