@@ -1,0 +1,79 @@
+openapi: 3.0.0
+info:
+  title: BidHouse API
+  description: API Documentation for BidHouse Online Auction Platform
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+    description: Local Server
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - bearerAuth: []
+
+paths:
+  /api/auth/register:
+    post:
+      summary: Register a new user
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - email
+                - password
+              properties:
+                name:
+                  type: string
+                  example: Eed Su'aidi
+                email:
+                  type: string
+                  format: email
+                  example: eed@example.com
+                password:
+                  type: string
+                  format: password
+                  example: rahasia123
+      responses:
+        201:
+          description: Registration successful
+        400:
+          description: Validation error or Email already exists
+
+  /api/auth/login:
+    post:
+      summary: Login user
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  example: eed@example.com
+                password:
+                  type: string
+                  example: rahasia123
+      responses:
+        200:
+          description: Login successful (Returns JWT)
+        401:
+          description: Invalid credentials
+        403:
+          description: Email not verified

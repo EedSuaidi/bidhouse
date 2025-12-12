@@ -1,0 +1,78 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// 1. ENUM: Biar data konsisten
+enum Role {
+  USER
+  ADMIN
+}
+
+enum ItemStatus {
+  OPEN
+  CLOSED
+}
+
+// 2. MODEL USER
+model User {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String
+  name     String
+  role     Role   @default(USER)
+
+  // Fitur Verifikasi & Reset Password
+  isVerified        Boolean @default(false)
+  verificationToken String? // Token dikirim ke email pas register
+  resetToken        String? // Token buat forgot password
+
+  createdAt DateTime @default(now())
+
+  // Relasi
+  bids     Bid[]
+  itemsWon Item[] @relation("ItemWinner")
+}
+
+// 3. MODEL ITEM (Barang Lelang)
+model Item {
+  id           Int     @id @default(autoincrement())
+  name         String
+  description  String  @db.Text
+  startPrice   Decimal @db.Decimal(10, 2) // Pake Decimal biar duitnya akurat
+  currentPrice Decimal @db.Decimal(10, 2)
+  imageUrl     String // WAJIB ADA (Sesuai request lo)
+
+  startTime DateTime
+  endTime   DateTime
+  status    ItemStatus @default(OPEN)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relasi
+  bids     Bid[]
+  winnerId Int?
+  winner   User? @relation("ItemWinner", fields: [winnerId], references: [id])
+}
+
+// 4. MODEL BID (Penawaran)
+model Bid {
+  id        Int      @id @default(autoincrement())
+  amount    Decimal  @db.Decimal(10, 2)
+  createdAt DateTime @default(now())
+
+  // Relasi
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+  itemId Int
+  item   Item @relation(fields: [itemId], references: [id])
+
+  // Index biar nge-query history bid per barangnya cepet
+  @@index([itemId])
+}
